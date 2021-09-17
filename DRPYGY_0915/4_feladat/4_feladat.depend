@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1631921081 source:d:\fileok\minden\db2021\drpygy_db1gyak\drpygy_0915\4_feladat\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
