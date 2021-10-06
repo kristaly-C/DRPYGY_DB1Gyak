@@ -7,6 +7,8 @@
 | DÁTUM | 1.F | 2.F| 3.F| 4.F| 5.F|
 |-----|----|-----|------|-----|-----|
 | 2021.09.15 | KÉSZ | KÉSZ | KÉSZ | KÉSZ | |
+| 2021.09.29 | KÉSZ |     |       |       | |
+| 2021.10.06 | KÉSZ | KÉSZ | KÉSZ | KÉSZ |  |
 
 ### _HASZNÁLT SZOFTVEREK_
 - CODE::BLOCKS
