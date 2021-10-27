@@ -10,6 +10,7 @@
 | 2021.09.29 | KÉSZ |     |       |       | | |
 | 2021.10.06 | KÉSZ | KÉSZ | KÉSZ | KÉSZ |  | |
 | 2021.10.13 | KÉSZ | KÉSZ | KÉSZ | KÉSZ | KÉSZ | |
+| 2021.10.20 | KÉSZ | KÉSZ |      | KÉSZ |    |   |
 
 ### _HASZNÁLT SZOFTVEREK_
 - CODE::BLOCKS
