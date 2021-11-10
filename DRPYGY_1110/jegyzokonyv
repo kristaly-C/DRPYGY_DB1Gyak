@@ -9,3 +9,5 @@
 5 - SELECT auto.rendszam,tulajdonos.nev FROM auto LEFT JOIN tulajdonos ON auto.tulaj = tulajdonos.tkod;
 
 6 - SELECT auto.rendszam,tulajdonos.tkod FROM auto INNER JOIN tulajdonos ON auto.tulaj = tulajdonos.tkod WHERE auto.ar > (SELECT AVG(auto.ar) FROM auto INNER JOIN tulajdonos ON auto.tulaj = tulajdonos.tkod WHERE tulajdonos.varos = 'Miskolc') AND tulajdonos.varos <> 'Miskolc';
+
+7 - SELECT tulajdonos.nev FROM tulajdonos WHERE (SELECT auto.tulaj,COUNT(auto.tulaj) FROM auto where auto.tulaj IS NOT NULL GROUP BY(tulaj)) > 1;
