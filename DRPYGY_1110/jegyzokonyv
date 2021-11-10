@@ -1,0 +1,11 @@
+1 - SELECT auto.rendszam,tulajdonos.nev FROM auto INNER JOIN tulajdonos ON auto.tulaj = tulajdonos.tkod;
+
+2 - SELECT auto.rendszam,auto.tipus,auto.szin,auto.kor,auto.ar,tulajdonos.nev FROM auto INNER JOIN tulajdonos ON auto.tulaj = tulajdonos.tkod WHERE tulajdonos.varos = 'Miskolc';
+
+3 - SELECT auto.tipus,auto.ar FROM auto;
+
+4 - SELECT tulajdonos.*,auto.rendszam FROM tulajdonos LEFT JOIN auto ON tulajdonos.tkod = auto.tulaj;
+
+5 - SELECT auto.rendszam,tulajdonos.nev FROM auto LEFT JOIN tulajdonos ON auto.tulaj = tulajdonos.tkod;
+
+6 - SELECT auto.rendszam,tulajdonos.tkod FROM auto INNER JOIN tulajdonos ON auto.tulaj = tulajdonos.tkod WHERE auto.ar > (SELECT AVG(auto.ar) FROM auto INNER JOIN tulajdonos ON auto.tulaj = tulajdonos.tkod WHERE tulajdonos.varos = 'Miskolc') AND tulajdonos.varos <> 'Miskolc';
