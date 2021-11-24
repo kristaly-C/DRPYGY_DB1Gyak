@@ -1,0 +1,82 @@
+UPDATE
+
+
+ÁRSZÁMOLÓ -> VASARLAS_KESZLETEK
+UPDATE `vasarlas_keszletek` SET `AR`=(SELECT vasarlas_keszletek.DARAB*keszlet.AR szorzat FROM keszlet WHERE keszlet.KESZLET_ID = vasarlas_keszletek.KESZLET_ID )  WHERE vasarlas_keszletek.ID IS NOT NULL
+---------------
+
+ÁRSZÁMOLÓ -> VASARLAS
+UPDATE `vasarlas` SET vasarlas.AR = (SELECT SUM(vasarlas_keszletek.AR) FROM vasarlas_keszletek WHERE vasarlas_keszletek.VASARLAS_ID = vasarlas.VASARLAS_ID) WHERE vasarlas.VASARLAS_ID IS NOT NULL
+----------------
+
+A vasarlas táblán a VIP tagok 5% kedvezményt kapnaka vásárlásból
+UPDATE `vasarlas` SET `AR`= vasarlas.AR*0.95 WHERE vasarlas.VIP = true
+----------------
+
+VIP PONTOK KISZÁMÍTÁSA
+UPDATE `vasarlas` SET EXTRA_VIP_PONT = vasarlas.AR*0.1 WHERE VIP != 0
+----------------------
+
+
+
+
+A Cseh boltokba áru érkezett mindenből 5 darab
+UPDATE `k_b` SET `RAKTARON`= k_b.RAKTARON+5 WHERE k_b.BOLT_AZONOSITO IN (SELECT arusito_boltok.BOLT_AZONOSITO FROM arusito_boltok WHERE arusito_boltok.ORSZAG_ROVID = "CZE")
+---------------
+---------------
+
+
+-----------
+-----------
+
+KIVÁLASZTÁS
+
+1Az átlagárnál olcsóbb készletek neve
+SELECT keszlet.KESZLET_NEVE FROM `keszlet` WHERE keszlet.AR < (SELECT AVG(KESZLET.AR) FROM keszlet)
+
+2A boltokban fellelhető készletek neve és mennyisége
+SELECT keszlet.KESZLET_NEVE,SUM(k_b.RAKTARON) "darab" FROM keszlet INNER JOIN k_b ON k_b.KESZLET_ID = keszlet.KESZLET_ID GROUP BY keszlet.KESZLET_NEVE
+-------------
+
+3A vásárlások emberekre szétbontva
+SELECT vasarlas.VASARLO_NEVE,SUM(vasarlas_keszletek.AR) "összeg" FROM vasarlas_keszletek INNER JOIN vasarlas ON vasarlas.VASARLAS_ID = vasarlas_keszletek.VASARLAS_ID GROUP BY vasarlas.VASARLO_NEVE
+-------------
+
+4Azok a boltok ahol van készleten a "BASTION" készlet
+SELECT k.KESZLET_NEVE "készlet",a.ORSZAG "ország",a.VAROS "város"   from keszlet k,arusito_boltok a,k_b kb 
+WHERE k.KESZLET_ID = kb.KESZLET_ID AND kb.BOLT_AZONOSITO = a.BOLT_AZONOSITO AND kb.RAKTARON > 0 AND k.KESZLET_NEVE LIKE "BASTION"  ORDER BY a.ORSZAG
+-------------
+
+5Hol van raktáron a készlet
+SELECT k.KESZLET_NEVE "készlet",a.ORSZAG "ország",a.VAROS "város"   from keszlet k,arusito_boltok a,k_b kb 
+WHERE k.KESZLET_ID = kb.KESZLET_ID AND kb.BOLT_AZONOSITO = a.BOLT_AZONOSITO AND kb.RAKTARON > 0  ORDER BY a.ORSZAG
+
+6A magyarországon gyártott lego készletek neve
+SELECT keszlet.KESZLET_NEVE FROM keszlet,gyartas_helye where keszlet.GYAR_KOD = gyartas_helye.GYAR_KOD AND gyartas_helye.GYAR_KOD LIKE "HUN%"
+
+-----------
+
+7Azok a vásárlók neve és vásárlás összege akik 2020-09-10 előtt vásároltak
+SELECT vasarlas.VASARLO_NEVE, b_v.DATUM,vasarlas.AR FROM vasarlas INNER JOIN b_v ON vasarlas.VASARLAS_ID = b_v.VASARLAS_ID WHERE b_v.DATUM < "2020-09-10"
+
+------------
+
+TÖRLÉS
+
+DELETE FROM `vasarlas_keszletek` WHERE vasarlas_keszletek.KESZLET_ID = 21166
+
+-----------
+
+MEGSZÜNTETÉS
+
+DROP TABLE VASARLAS_KESZLETEK;
+DROP TABLE B_V;
+DROP TABLE VASARLAS;
+DROP TABLE K_B;
+DROP TABLE ARUSITO_BOLTOK;
+DROP TABLE K_LD;
+DROP TABLE LEGO_DARABOK;
+DROP TABLE KESZLET;
+DROP TABLE GYARTAS_HELYE;
+
+
