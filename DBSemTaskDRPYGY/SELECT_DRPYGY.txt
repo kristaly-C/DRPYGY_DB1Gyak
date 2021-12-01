@@ -52,12 +52,18 @@ SELECT k.KESZLET_NEVE "készlet",a.ORSZAG "ország",a.VAROS "város"   from kesz
 WHERE k.KESZLET_ID = kb.KESZLET_ID AND kb.BOLT_AZONOSITO = a.BOLT_AZONOSITO AND kb.RAKTARON > 0  ORDER BY a.ORSZAG
 
 6A magyarországon gyártott lego készletek neve
-SELECT keszlet.KESZLET_NEVE FROM keszlet,gyartas_helye where keszlet.GYAR_KOD = gyartas_helye.GYAR_KOD AND gyartas_helye.GYAR_KOD LIKE "HUN%"
+SELECT keszlet.KESZLET_NEVE FROM keszlet,gyartas_helye where keszlet.GYAR_KOD = gyartas_helye.GYAR_KOD AND gyartas_helye.GYAR_KOD LIKE "DNK%"
 
 -----------
 
 7Azok a vásárlók neve és vásárlás összege akik 2020-09-10 előtt vásároltak
 SELECT vasarlas.VASARLO_NEVE, b_v.DATUM,vasarlas.AR FROM vasarlas INNER JOIN b_v ON vasarlas.VASARLAS_ID = b_v.VASARLAS_ID WHERE b_v.DATUM < "2020-09-10"
+
+------------
+8A 10274-es készletben milyen elemek vannak és hány darab. 
+
+SELECT keszlet.KESZLET_NEVE,lego_darabok.leiras, k_ld.MENNYISEG FROM `k_ld` 
+INNER JOIN lego_darabok ON lego_darabok.ID = k_ld.ID INNER JOIN keszlet ON keszlet.KESZLET_ID = k_ld.KESZLET_ID WHERE keszlet.KESZLET_ID = 10274;
 
 ------------
 
