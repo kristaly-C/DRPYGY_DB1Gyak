@@ -1,0 +1,11 @@
+SELECT t.nev, gy,nev FROM termek t INNER JOIN gyarto gy ON t.gyarto =
+gy.adoszam;
+
+SELECT t.nev, t.ear FROM termek t INNER JOIN gyarto gy ON t.gyarto =
+gy.adoszam WHERE gy.nev = ‘X’
+
+SELECT a.nev FROM termek t INNER JOIN komponens k ON t.tkod =
+k.termek INNER JOIN alkatresz a ON k.alkatresz = a.akod WHERE t.nev = ‘X’;
+
+SELECT nev, tkod FROM termek WHERE tkod NOT IN (SELECT termek
+FROM komponens;

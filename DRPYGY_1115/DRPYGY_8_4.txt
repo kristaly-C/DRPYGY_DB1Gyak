@@ -1,0 +1,14 @@
+SELECT COUNT(*) FROM termek WHERE ear > (SELECT avg(ear) FROM termek);
+
+SELECT nev FROM termek WHERE ear = (SELECT max(ear) FROM termek);
+
+SELECT nev FROM gyarto WHERE adoszam IN (SELECT gyarto FROM termek WHERE ear = (SELECT max(ear) FROM termek));
+
+CREATE VIEW gyatlag AS SELECT gy.nev, AVG(gy.ear) mear FROM gyarto t
+INNER JOIN termek t ON t.gyarto = gy.adoszam GROUP BY gy.nev;
+és
+SELECT nev FROM gyatlag WHERE mear = (SELECT max(mear) FROM
+gyatlag);
+
+SELECT gy.nev, AVG (t.ear) aear FROM gyarto gy LEFT OUTER JOIN termek
+t ON gy.adoszam = t.gyarto GROUP BY gy,nev

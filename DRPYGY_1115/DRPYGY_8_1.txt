@@ -1,0 +1,6 @@
+SELECT * FROM termek WHERE ear > X;
+SELECT gyarto.nev, gyarto.adoszam FROM gyarto WHERE telephely LIKE X;
+SELECT count(*) FROM termek WHERE ear > X;
+SELECT termek.tkod FROM termek WHERE termek.nev LIKE "%tej%";
+SELECT gyarto.nev FROM gyarto WHERE gyarto.telephely IS NULL;
+
