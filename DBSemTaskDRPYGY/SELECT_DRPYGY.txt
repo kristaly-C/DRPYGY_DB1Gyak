@@ -66,6 +66,13 @@ SELECT keszlet.KESZLET_NEVE,lego_darabok.leiras, k_ld.MENNYISEG FROM `k_ld`
 INNER JOIN lego_darabok ON lego_darabok.ID = k_ld.ID INNER JOIN keszlet ON keszlet.KESZLET_ID = k_ld.KESZLET_ID WHERE keszlet.KESZLET_ID = 10274;
 
 ------------
+9. Melyik országban dolgoznak legtöbben a LEGÓ-nál és hányan?
+
+SELECT gyartas_helye.ORSZAG, alkalmazott.OSSZES_ALK FROM alkalmazott INNER JOIN gyartas_helye ON alkalmazott.GYAR_KOD = gyartas_helye.GYAR_KOD ORDER BY alkalmazott.OSSZES_ALK DESC LIMIT 1;
+------------
+10. Az adott országokban hányan dolgoznak összesen és annak hány százaléka dolgozik a gyártósoron.
+
+SELECT gyartas_helye.ORSZAG,alkalmazott.OSSZES_ALK,(alkalmazott.GYARTOSOR / alkalmazott.OSSZES_ALK)*100 AS MUNKÁSOK FROM alkalmazott INNER JOIN gyartas_helye ON gyartas_helye.GYAR_KOD = alkalmazott.GYAR_KOD;
 
 TÖRLÉS
 
@@ -75,6 +82,7 @@ DELETE FROM `vasarlas_keszletek` WHERE vasarlas_keszletek.KESZLET_ID = 21166
 
 MEGSZÜNTETÉS
 
+DROP TABLE ALKALMAZOTT;
 DROP TABLE VASARLAS_KESZLETEK;
 DROP TABLE B_V;
 DROP TABLE VASARLAS;
